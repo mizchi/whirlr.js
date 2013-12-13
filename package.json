@@ -1,0 +1,15 @@
+{
+  "name": "dqueue",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers coffee:coffee-script --reporter spec"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "simply-deferred": "~2.4.0",
+    "sinon": "~1.7.3"
+  }
+}
