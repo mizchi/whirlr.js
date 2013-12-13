@@ -1,54 +1,55 @@
 # Whirlr
 
-Manage deferred event queues with `lock` and `unlock` control
+Manage deferred event queues with `stop` and `resume` control
 
 ## Requirements
 
 * jQuery or simply-deferred
 
-
 ## Install
 
 ```
-$ npm install deferred-runner
+$ npm install whirlr
 ```
 
 ```
-$ bower install deferred-runner
+$ bower install whirlr
 ```
 
 ## How to use
 
 ```
-drunner = new Whirlr
+whirlr = new Whirlr
 
 # Add 1st queue
-drunner.addQueue (d) ->
+whirlr.add (d) ->
   console.log 'queue 1'
   setTimeout ->
     d.resolve()
   , 100
 
 # Add 2nd queue
-drunner.addQueue (d) ->
+whirlr.add (d) ->
   console.log 'queue 2'
 
   # add queue to last
-  drunner.addQueue (d) ->
+  whirlr.add (d) ->
     console.log 'queue 3'
     d.resolve()
   d.resolve()
 
 # stop runner execution
-drunner.lock()
+whirlr.stop()
 setTimeout ->
   console.log 'start'
-  drunner.unlock()
+  whirlr.resume()
 , 100
+console.log 'loaded'
 ```
 
 `Result`
 ```
+loaded
 start
 queue 1
 queue 2
