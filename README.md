@@ -64,3 +64,6 @@ $ npm install -g mocha
 # run tests
 $ mocha --compilers coffee:coffee-script --reporter spec
 ```
+
+## Thanks to:
+* guys at Quipper 
