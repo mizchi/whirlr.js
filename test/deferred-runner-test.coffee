@@ -1,14 +1,14 @@
-DeferredQueue = require '../src/dqueue'
+DeferredRunner = require '../src/deferred-runner'
 Deferred = (require 'simply-deferred').Deferred
 sinon = require 'sinon'
 {ok} = require 'assert'
 
-describe 'DeferredQueue', ->
+describe 'DeferredRunner', ->
   it 'should be called with order', (done) ->
     f1 = sinon.spy()
     f2 = sinon.spy()
 
-    dqueue = new DeferredQueue
+    dqueue = new DeferredRunner
     dqueue.addQueue (d) ->
       f1()
       d.resolve()
@@ -23,19 +23,19 @@ describe 'DeferredQueue', ->
 
   describe '#lock', ->
     it 'should lock event', ->
-      dqueue = new DeferredQueue
+      dqueue = new DeferredRunner
       dqueue.lock()
       ok dqueue.locked()
 
   describe '#unlock', ->
     it 'should lock', ->
-      dqueue = new DeferredQueue
+      dqueue = new DeferredRunner
       dqueue.lock()
       dqueue.unlock()
       ok ! dqueue.locked()
 
     it 'should restart event', (done) ->
-      dqueue = new DeferredQueue
+      dqueue = new DeferredRunner
       dqueue.addQueue (d) ->
         d.resolve()
         done()
@@ -46,7 +46,7 @@ describe 'DeferredQueue', ->
 
   describe '#addQueue', ->
     it 'should add and start after lock', (done) ->
-      dqueue = new DeferredQueue
+      dqueue = new DeferredRunner
       dqueue.addQueue (d) ->
         d.resolve()
         done()
@@ -55,7 +55,7 @@ describe 'DeferredQueue', ->
     it 'should add queue to last', (done) ->
       f1 = sinon.spy()
       f2 = sinon.spy()
-      dqueue = new DeferredQueue
+      dqueue = new DeferredRunner
       dqueue.addQueue (d) ->
         f1()
         d.resolve()
@@ -73,7 +73,7 @@ describe 'DeferredQueue', ->
     it 'should prepend queue to head', (done) ->
       f1 = sinon.spy()
       f2 = sinon.spy()
-      dqueue = new DeferredQueue
+      dqueue = new DeferredRunner
 
       dqueue.addQueue (d) ->
         f1()
@@ -104,7 +104,7 @@ describe 'DeferredQueue', ->
 
       f2_wrapped.priority = 5
 
-      dqueue = new DeferredQueue
+      dqueue = new DeferredRunner
       dqueue.addQueue f1_wrapped
       dqueue.addQueue f2_wrapped
 

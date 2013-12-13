@@ -1,6 +1,6 @@
 Deferred = $?.Deferred or (require 'simply-deferred').Deferred
 
-module.exports = class DeferredQueue
+module.exports = class DeferredRunner
   constructor: ->
     @queues = []
     @_lock = Deferred().resolve()
