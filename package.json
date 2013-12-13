@@ -1,8 +1,8 @@
 {
-  "name": "deferred-runner",
-  "version": "0.0.2",
-  "description": "defered manager",
-  "main": "index.js",
+  "name": "whirlr",
+  "version": "0.0.3",
+  "description": "deferred event manager",
+  "main": "dist/whirlr.js",
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script --reporter spec"
   },
