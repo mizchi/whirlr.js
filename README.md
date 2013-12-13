@@ -1,4 +1,4 @@
-# DeferredRunner
+# Whirlr
 
 Manage deferred event queues with `lock` and `unlock` control
 
@@ -20,7 +20,7 @@ $ bower install deferred-runner
 ## How to use
 
 ```
-drunner = new DeferredRunner
+drunner = new Whirlr
 
 # Add 1st queue
 drunner.addQueue (d) ->

@@ -8,12 +8,12 @@ class Whirlr
   sort: (f) ->
     @queues.sort f
 
-  locked: -> @_lock.state() isnt 'resolved'
+  stopped: -> @_lock.state() isnt 'resolved'
 
-  lock: ->
-    @prependQueue (d) ->
+  stop: ->
+    @unshift (d) ->
 
-  unlock: ->
+  resume: ->
     @_lock.resolve()
 
   _next: =>
@@ -24,17 +24,17 @@ class Whirlr
       @_lock.resolve()
 
   _startIfReady: ->
-    unless @locked()
+    unless @stopped()
       @_lock = Deferred()
       setTimeout =>
         @_next()
       , 0
 
-  prependQueue: (deferred_func) ->
+  unshift: (deferred_func) ->
     @queues.unshift deferred_func
     do @_startIfReady
 
-  addQueue: (deferred_func) ->
+  add: (deferred_func) ->
     @queues.push deferred_func
     do @_startIfReady
 

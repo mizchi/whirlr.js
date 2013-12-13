@@ -16,15 +16,15 @@
       return this.queues.sort(f);
     };
 
-    Whirlr.prototype.locked = function() {
+    Whirlr.prototype.stopped = function() {
       return this._lock.state() !== 'resolved';
     };
 
-    Whirlr.prototype.lock = function() {
-      return this.prependQueue(function(d) {});
+    Whirlr.prototype.stop = function() {
+      return this.unshift(function(d) {});
     };
 
-    Whirlr.prototype.unlock = function() {
+    Whirlr.prototype.resume = function() {
       return this._lock.resolve();
     };
 
@@ -40,7 +40,7 @@
 
     Whirlr.prototype._startIfReady = function() {
       var _this = this;
-      if (!this.locked()) {
+      if (!this.stopped()) {
         this._lock = Deferred();
         return setTimeout(function() {
           return _this._next();
@@ -48,12 +48,12 @@
       }
     };
 
-    Whirlr.prototype.prependQueue = function(deferred_func) {
+    Whirlr.prototype.unshift = function(deferred_func) {
       this.queues.unshift(deferred_func);
       return this._startIfReady();
     };
 
-    Whirlr.prototype.addQueue = function(deferred_func) {
+    Whirlr.prototype.add = function(deferred_func) {
       this.queues.push(deferred_func);
       return this._startIfReady();
     };

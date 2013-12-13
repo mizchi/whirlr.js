@@ -8,81 +8,81 @@ describe 'Whirlr', ->
     f2 = sinon.spy()
 
     whirlr = new Whirlr
-    whirlr.addQueue (d) ->
+    whirlr.add (d) ->
       f1()
       d.resolve()
 
-    whirlr.addQueue (d) ->
+    whirlr.add (d) ->
       f2()
       d.resolve()
       done()
 
-    whirlr.lock()
-    whirlr.unlock()
+    whirlr.stop()
+    whirlr.resume()
 
-  describe '#lock', ->
-    it 'should lock event', ->
+  describe '#stop', ->
+    it 'should stop event', ->
       whirlr = new Whirlr
-      whirlr.lock()
-      ok whirlr.locked()
+      whirlr.stop()
+      ok whirlr.stopped()
 
-  describe '#unlock', ->
-    it 'should lock', ->
+  describe '#resume', ->
+    it 'should stop', ->
       whirlr = new Whirlr
-      whirlr.lock()
-      whirlr.unlock()
-      ok ! whirlr.locked()
+      whirlr.stop()
+      whirlr.resume()
+      ok ! whirlr.stopped()
 
     it 'should restart event', (done) ->
       whirlr = new Whirlr
-      whirlr.addQueue (d) ->
+      whirlr.add (d) ->
         d.resolve()
         done()
 
-      whirlr.lock()
-      whirlr.unlock()
-      ok ! whirlr.locked()
+      whirlr.stop()
+      whirlr.resume()
+      ok ! whirlr.stopped()
 
-  describe '#addQueue', ->
-    it 'should add and start after lock', (done) ->
+  describe '#add', ->
+    it 'should add and start after stop', (done) ->
       whirlr = new Whirlr
-      whirlr.addQueue (d) ->
+      whirlr.add (d) ->
         d.resolve()
         done()
-      ok whirlr.locked()
+      ok whirlr.stopped()
 
     it 'should add queue to last', (done) ->
       f1 = sinon.spy()
       f2 = sinon.spy()
       whirlr = new Whirlr
-      whirlr.addQueue (d) ->
+      whirlr.add (d) ->
         f1()
         d.resolve()
 
-      whirlr.addQueue (d) ->
+      whirlr.add (d) ->
         f2()
         d.resolve()
 
-      whirlr.addQueue (d) ->
+      whirlr.add (d) ->
         sinon.assert.callOrder(f1, f2)
         d.resolve()
         done()
 
-  describe '#prependQueue', ->
+  describe '#unshift', ->
     it 'should prepend queue to head', (done) ->
       f1 = sinon.spy()
       f2 = sinon.spy()
       whirlr = new Whirlr
 
-      whirlr.addQueue (d) ->
+      whirlr.add (d) ->
         f1()
         d.resolve()
 
-      whirlr.prependQueue (d) ->
+      whirlr.unshift (d) ->
         f2()
         d.resolve()
 
-      whirlr.addQueue (d) ->
+      whirlr.add (d) ->
         sinon.assert.callOrder(f2, f1)
         d.resolve()
         done()
@@ -104,8 +104,8 @@ describe 'Whirlr', ->
       f2_wrapped.priority = 5
 
       whirlr = new Whirlr
-      whirlr.addQueue f1_wrapped
-      whirlr.addQueue f2_wrapped
+      whirlr.add f1_wrapped
+      whirlr.add f2_wrapped
 
       resolver = (d) ->
         sinon.assert.callOrder(f2, f1)
@@ -113,6 +113,6 @@ describe 'Whirlr', ->
         done()
 
       resolver.priority = 0
-      whirlr.addQueue resolver
+      whirlr.add resolver
 
       whirlr.sort (a, b) -> a.priority > b.priority
