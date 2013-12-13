@@ -1,6 +1,6 @@
 Deferred = $?.Deferred or (require 'simply-deferred').Deferred
 
-class DeferredRunner
+class Whirlr
   constructor: ->
     @queues = []
     @_lock = Deferred().resolve()
@@ -38,6 +38,6 @@ class DeferredRunner
     @queues.push deferred_func
     do @_startIfReady
 
-if module?.exports? then module.exports = DeferredRunner
+if module?.exports? then module.exports = Whirlr
 else
-  window.DeferredRunner = DeferredRunner
+  window.Whirlr = Whirlr
