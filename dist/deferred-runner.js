@@ -5,7 +5,7 @@
 
   Deferred = (typeof $ !== "undefined" && $ !== null ? $.Deferred : void 0) || (require('simply-deferred')).Deferred;
 
-  module.exports = DeferredRunner = (function() {
+  DeferredRunner = (function() {
     function DeferredRunner() {
       this._next = __bind(this._next, this);
       this.queues = [];
@@ -61,5 +61,11 @@
     return DeferredRunner;
 
   })();
+
+  if ((typeof module !== "undefined" && module !== null ? module.exports : void 0) != null) {
+    module.exports = DeferredRunner;
+  } else {
+    window.DeferredRunner = DeferredRunner;
+  }
 
 }).call(this);

@@ -1,6 +1,6 @@
 {
   "name": "deferred-runner",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "dist/deferred-runner.js",
   "authors": [
     "Koutarou Chikuba <miz404@gmail.com>"
