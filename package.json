@@ -1,15 +1,17 @@
 {
-  "name": "dqueue",
-  "version": "0.0.0",
-  "description": "",
+  "name": "deferred-runner",
+  "version": "0.0.1",
+  "description": "defered manager",
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script --reporter spec"
   },
   "author": "",
   "license": "BSD-2-Clause",
+  "dependencies": {
+    "simply-deferred": "~2.4.0"
+  },
   "devDependencies": {
-    "simply-deferred": "~2.4.0",
     "sinon": "~1.7.3"
   }
 }
