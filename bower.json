@@ -1,0 +1,16 @@
+{
+  "name": "deferred-runner",
+  "version": "0.0.0",
+  "main": "dist/deferred-runner.js",
+  "authors": [
+    "Koutarou Chikuba <miz404@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
