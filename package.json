@@ -1,6 +1,6 @@
 {
   "name": "deferred-runner",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "defered manager",
   "main": "index.js",
   "scripts": {
