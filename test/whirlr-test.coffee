@@ -68,6 +68,56 @@ describe 'Whirlr', ->
         d.resolve()
         done()
 
+    it 'should stop after stop', (done) ->
+      f1 = sinon.spy()
+      f2 = sinon.spy()
+      f3 = sinon.spy()
+      whirlr = new Whirlr
+
+      whirlr.add (d) ->
+        f1()
+        d.resolve()
+
+      whirlr.add (d) ->
+        f2()
+        d.resolve()
+
+      whirlr.add (d) ->
+        f3()
+        d.resolve()
+
+      setTimeout ->
+        ok f1.called
+        ok f2.called
+        ok f3.called
+        done()
+      , 100
+
+    it 'should stop after stop', (done) ->
+      f1 = sinon.spy()
+      f2 = sinon.spy()
+      f3 = sinon.spy()
+      whirlr = new Whirlr
+
+      whirlr.add (d) ->
+        f1()
+        d.resolve()
+
+      whirlr.add (d) ->
+        f2()
+
+      whirlr.add (d) ->
+        f3()
+
+      setTimeout ->
+        ok f1.called
+        ok f2.called
+        ok ! f3.called
+        done()
+      , 100
+
+
+
   describe '#unshift', ->
     it 'should prepend queue to head', (done) ->
       f1 = sinon.spy()

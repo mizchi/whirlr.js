@@ -17,11 +17,12 @@ class Whirlr
     @_lock.resolve()
 
   _next: =>
-    if deferred_func = @queues.shift()
-      deferred_func @_lock
+    if @queues.length > 0
+      deferred_func = @queues.shift()
+      deferred_func(@_lock)
       @_lock.done @_next
     else
-      @_lock.resolve()
+      @resume()
 
   _startIfReady: ->
     unless @stopped()
