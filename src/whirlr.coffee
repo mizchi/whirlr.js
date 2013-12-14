@@ -21,8 +21,12 @@ class Whirlr
 
   _next: =>
     if func = @queues.shift()
-      @_lock = Deferred().done @_next
-      func @_lock
+      if func.length > 0
+        @_lock = Deferred().done @_next
+        func @_lock
+      else
+        @_lock = do func
+        @_lock.done @_next
     else @resume()
 
   _startIfReady: ->

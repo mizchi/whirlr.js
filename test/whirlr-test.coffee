@@ -1,5 +1,6 @@
 Whirlr = require '../src/whirlr'
 sinon = require 'sinon'
+Deferred = (require 'simply-deferred').Deferred
 {ok} = require 'assert'
 
 describe 'Whirlr', ->
@@ -109,7 +110,15 @@ describe 'Whirlr', ->
         done()
       , 10
 
-
+    it 'should run without callback', (done) ->
+      whirlr = new Whirlr
+      whirlr.add ->
+        d = Deferred()
+        d.done -> done()
+        setTimeout ->
+          d.resolve()
+        , 0
+        d
 
   describe '#unshift', ->
     it 'should prepend queue to head', (done) ->
