@@ -1,6 +1,9 @@
 # Whirlr
 
-Manage deferred event queues with `stop` and `resume` control
+[![Build Status](https://drone.io/github.com/mizchi/whirlr.js/status.png)](https://drone.io/github.com/mizchi/whirlr.js/latest)
+
+Control sequencial deferred events for with lock and resume.
+
 
 ## Requirements
 
@@ -66,4 +69,4 @@ $ mocha --compilers coffee:coffee-script --reporter spec
 ```
 
 ## Thanks to:
-* guys at Quipper 
+* Guys at Quipper 
