@@ -1,28 +1,22 @@
 Deferred = $?.Deferred or (require 'simply-deferred').Deferred
-
 class Whirlr
   constructor: ->
     @queues = []
     @_lock = Deferred().resolve()
 
-  sort: (f) ->
-    @queues.sort f
+  sort: (f) -> @queues.sort f
 
   stopped: -> @_lock.state() isnt 'resolved'
 
-  stop: ->
-    @unshift (d) ->
+  stop: -> @unshift (d) ->
 
-  resume: ->
-    @_lock.resolve()
+  resume: -> setTimeout (=> @_lock.resolve()), 0
 
   _next: =>
-    if @queues.length > 0
-      deferred_func = @queues.shift()
-      deferred_func(@_lock)
-      @_lock.done @_next
-    else
-      @resume()
+    if func = @queues.shift()
+      @_lock = Deferred().done @_next
+      func @_lock
+    else @resume()
 
   _startIfReady: ->
     unless @stopped()
@@ -31,8 +25,8 @@ class Whirlr
         @_next()
       , 0
 
-  unshift: (deferred_func) ->
-    @queues.unshift deferred_func
+  unshift: (func) ->
+    @queues.unshift func
     do @_startIfReady
 
   add: (deferred_func) ->
@@ -40,5 +34,4 @@ class Whirlr
     do @_startIfReady
 
 if module?.exports? then module.exports = Whirlr
-else
-  window.Whirlr = Whirlr
+else window.Whirlr = Whirlr

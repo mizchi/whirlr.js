@@ -4,16 +4,9 @@ sinon = require 'sinon'
 
 describe 'Whirlr', ->
   it 'should be called with order', (done) ->
-    f1 = sinon.spy()
-    f2 = sinon.spy()
-
     whirlr = new Whirlr
+    whirlr.add (d) -> d.resolve()
     whirlr.add (d) ->
-      f1()
-      d.resolve()
-
-    whirlr.add (d) ->
-      f2()
       d.resolve()
       done()
 
@@ -31,7 +24,7 @@ describe 'Whirlr', ->
       whirlr = new Whirlr
       whirlr.stop()
       whirlr.resume()
-      ok ! whirlr.stopped()
+      ok whirlr.stopped()
 
     it 'should restart event', (done) ->
       whirlr = new Whirlr
@@ -40,8 +33,9 @@ describe 'Whirlr', ->
         done()
 
       whirlr.stop()
-      whirlr.resume()
-      ok ! whirlr.stopped()
+      setTimeout ->
+        whirlr.resume()
+      , 0
 
   describe '#add', ->
     it 'should add and start after stop', (done) ->
@@ -68,12 +62,11 @@ describe 'Whirlr', ->
         d.resolve()
         done()
 
-    it 'should stop after stop', (done) ->
+    it 'should run all without stop', (done) ->
       f1 = sinon.spy()
       f2 = sinon.spy()
       f3 = sinon.spy()
       whirlr = new Whirlr
-
       whirlr.add (d) ->
         f1()
         d.resolve()
@@ -91,7 +84,7 @@ describe 'Whirlr', ->
         ok f2.called
         ok f3.called
         done()
-      , 100
+      , 10
 
     it 'should stop after stop', (done) ->
       f1 = sinon.spy()
@@ -114,7 +107,7 @@ describe 'Whirlr', ->
         ok f2.called
         ok ! f3.called
         done()
-      , 100
+      , 10
 
 
 
@@ -140,17 +133,15 @@ describe 'Whirlr', ->
   describe '#sort', ->
     it 'should sort by priority', ->
       f1 = sinon.spy()
-      f2 = sinon.spy()
-
       f1_wrapped = (d) ->
         f1()
         d.resolve()
       f1_wrapped.priority = 1
 
+      f2 = sinon.spy()
       f2_wrapped = (d) ->
         f2()
         d.resolve()
-
       f2_wrapped.priority = 5
 
       whirlr = new Whirlr
