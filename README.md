@@ -5,6 +5,12 @@
 Control sequencial deferred events for with lock and resume.
 
 
+## Goal
+
+* Wait user input and resume.
+* Pool action events after current one
+* Handle them with jQuery.Deferred API
+
 ## Requirements
 
 * jQuery or simply-deferred
