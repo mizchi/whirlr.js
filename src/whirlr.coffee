@@ -1,7 +1,10 @@
 Deferred = $?.Deferred or (require 'simply-deferred').Deferred
 
 defer = (f) ->
-  setTimeout f, 0
+  if requestAnimationFrame?
+    requestAnimationFrame f
+  else
+    setTimeout f, 0
 
 class Whirlr
   constructor: ->
