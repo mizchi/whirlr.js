@@ -4,7 +4,7 @@
   "description": "deferred event manager",
   "main": "dist/whirlr.js",
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script --reporter spec"
+    "test": "node_modules/mocha/bin/mocha --require coffee-script --compilers coffee:coffee-script --reporter spec"
   },
   "author": "",
   "license": "BSD-2-Clause",
@@ -12,6 +12,8 @@
     "simply-deferred": "~2.4.0"
   },
   "devDependencies": {
-    "sinon": "~1.7.3"
+    "sinon": "~1.7.3",
+    "mocha": "~1.15.1",
+    "coffee-script": "~1.6.3"
   }
 }
