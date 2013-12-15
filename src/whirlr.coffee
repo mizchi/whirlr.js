@@ -15,7 +15,7 @@ class Whirlr
 
   stopped: -> @_lock.state() isnt 'resolved'
 
-  stop: -> @unshift (d) ->
+  stop: -> @unshift new Whirlr.LockTask
 
   resume: -> defer => @_lock.resolve()
 
@@ -46,19 +46,20 @@ class Whirlr
     do @_startIfReady
 
 class Whirlr.Task
-  constructor: ->
-    @lock = Deferred()
-
   _execute: ->
     if @execute.length > 0
+      @lock = Deferred()
       @execute(@lock)
       @lock
     else
-      @execute()
+      @lock = @execute()
 
   execute: ->
 
-class Whirlr.LockTask
+class Whirlr.LockTask extends Whirlr.Task
+  execute: (d) ->
+
+  unlock: -> @lock.resolve()
 
 if module?.exports? then module.exports = Whirlr
 else window.Whirlr = Whirlr
