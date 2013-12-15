@@ -140,7 +140,7 @@ describe 'Whirlr', ->
         done()
 
   describe '#sort', ->
-    it 'should sort by priority', ->
+    it 'should sort by priority', (done) ->
       f1 = sinon.spy()
       f1_wrapped = (d) ->
         f1()
@@ -165,4 +165,43 @@ describe 'Whirlr', ->
       resolver.priority = 0
       whirlr.add resolver
 
-      whirlr.sort (a, b) -> a.priority > b.priority
+      whirlr.sort (a, b) -> a.priority < b.priority
+
+describe 'Whirlr.Task', ->
+  it 'should add as Task', (done) ->
+    whirlr = new Whirlr
+    class Task extends Whirlr.Task
+      execute: (d) ->
+        setTimeout ->
+          d.resolve()
+        , 0
+    whirlr.add new Task
+    whirlr.add (d) =>
+      d.done ->
+        done()
+      d.resolve()
+
+  it 'should add as Task without calback args', (done) ->
+    whirlr = new Whirlr
+    class Task extends Whirlr.Task
+      execute: ->
+        Deferred().resolve()
+    whirlr.add new Task
+    whirlr.add (d) =>
+      d.done ->
+        done()
+      d.resolve()
+
+  it 'should add as Task without calback args', (done) ->
+    f1 = sinon.spy()
+    whirlr = new Whirlr
+    class Task extends Whirlr.Task
+      execute: ->
+        d = Deferred()
+        d.done -> f1()
+    whirlr.add new Task
+    whirlr.add (d) => d.resolve()
+    setTimeout ->
+      ok ! f1.called
+      done()
+    , 10

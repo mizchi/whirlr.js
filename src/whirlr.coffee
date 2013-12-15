@@ -21,6 +21,9 @@ class Whirlr
 
   _next: =>
     if func = @queues.shift()
+      if func._execute
+        func = func._execute.bind func
+
       if func.length > 0
         @_lock = Deferred().done @_next
         func @_lock
@@ -41,6 +44,21 @@ class Whirlr
   add: (func) ->
     @queues.push func
     do @_startIfReady
+
+class Whirlr.Task
+  constructor: ->
+    @lock = Deferred()
+
+  _execute: ->
+    if @execute.length > 0
+      @execute(@lock)
+      @lock
+    else
+      @execute()
+
+  execute: ->
+
+class Whirlr.LockTask
 
 if module?.exports? then module.exports = Whirlr
 else window.Whirlr = Whirlr
