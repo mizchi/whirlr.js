@@ -2,12 +2,12 @@
 
 [![Build Status](https://drone.io/github.com/mizchi/whirlr.js/status.png)](https://drone.io/github.com/mizchi/whirlr.js/latest)
 
-Control sequencial deferred events for with lock and resume.
+Control sequencial deferred events.
 
 
 ## Goal
 
-* Wait user input and resume.
+* Wait locking task (like user input) and resume.
 * Pool action events after current one
 * Handle them with jQuery.Deferred API
 
