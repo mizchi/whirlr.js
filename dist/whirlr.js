@@ -52,7 +52,7 @@
           return func(this._lock);
         } else {
           this._lock = func();
-          if (this._lock.then != null) {
+          if (this._lock.then == null) {
             throw 'task does not runnable';
           }
           return this._lock.done(this._next);

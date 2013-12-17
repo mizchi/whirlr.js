@@ -29,7 +29,7 @@ class Whirlr
         func @_lock
       else
         @_lock = do func
-        if @_lock.then? then throw 'task does not runnable'
+        unless @_lock.then? then throw 'task does not runnable'
         @_lock.done @_next
     else @resume()
 
