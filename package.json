@@ -1,6 +1,6 @@
 {
   "name": "whirlr",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "deferred event manager",
   "main": "dist/whirlr.js",
   "scripts": {

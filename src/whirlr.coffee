@@ -8,8 +8,7 @@ defer = (f) ->
 
 class Whirlr
   constructor: ->
-    @queues = []
-    @_lock = Deferred().resolve()
+    @clear()
 
   sort: (f) -> @queues.sort f
 
@@ -31,7 +30,16 @@ class Whirlr
         @_lock = do func
         unless @_lock.then? then throw 'task does not runnable'
         @_lock.done @_next
-    else @resume()
+    else
+      do @done
+
+  done: ->
+
+  clear: ->
+    @_lock?.reject?()
+
+    @queues = []
+    @_lock = Deferred().resolve()
 
   _startIfReady: ->
     unless @stopped()

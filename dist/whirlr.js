@@ -18,8 +18,7 @@
   Whirlr = (function() {
     function Whirlr() {
       this._next = __bind(this._next, this);
-      this.queues = [];
-      this._lock = Deferred().resolve();
+      this.clear();
     }
 
     Whirlr.prototype.sort = function(f) {
@@ -58,8 +57,21 @@
           return this._lock.done(this._next);
         }
       } else {
-        return this.resume();
+        return this.done();
       }
+    };
+
+    Whirlr.prototype.done = function() {};
+
+    Whirlr.prototype.clear = function() {
+      var _ref;
+      if ((_ref = this._lock) != null) {
+        if (typeof _ref.reject === "function") {
+          _ref.reject();
+        }
+      }
+      this.queues = [];
+      return this._lock = Deferred().resolve();
     };
 
     Whirlr.prototype._startIfReady = function() {
